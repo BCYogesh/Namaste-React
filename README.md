@@ -15,15 +15,17 @@
  *  - Contact
  */
 
-Two types of Export/Import
+/*
 
-- Default Export/Import
+    1. page load -> API call -> Render on UI
+    2. page load -> Render on skeleton -> API Call -> Render
 
-export default <componentName />;
-import component from "path";
+    >> React has render cycle has very fast mechanism
+
+- useEffect
+
+    >> When the body component has rendereding finished after call the callback function useEffect.
 
 
-- Named Export/Import
 
-export const Component;
-import {Component} from "path";
+*/
