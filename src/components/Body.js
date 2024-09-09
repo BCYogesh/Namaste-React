@@ -46,9 +46,7 @@ const Body = () => {
                   .toLowerCase()
                   .includes(searchText.toLowerCase())
               );
-
               setFilteredRestaruant(searchedRestaruant);
-
             }}
           >
             Search
@@ -60,8 +58,9 @@ const Body = () => {
           onClick={() => {
             let filteredRestaruant = listOfRestaruant.filter(
               (res) => res.info.avgRating >= 4.4
+
             );
-            setListOfRestaruant(filteredRestaruant);
+            setFilteredRestaruant(filteredRestaruant);
           }}
         >
           Top Rated Restaurant
