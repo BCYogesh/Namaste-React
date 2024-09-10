@@ -1,6 +1,7 @@
 import RestaruantCard from "./RestaruantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaruant, setListOfRestaruant] = useState([]);
@@ -26,53 +27,55 @@ const Body = () => {
     );
   };
 
-  return listOfRestaruant.length === 0 ? (
-    <Shimmer />
-  ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            className="search-box"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+  return listOfRestaruant.length === 0 ? <Shimmer />
+    : (
+
+      <div className="body">
+        <div className="filter">
+          <div className="search">
+            <input
+              type="text"
+              className="search-box"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                let searchedRestaruant = listOfRestaruant.filter((resData) =>
+                  resData.info.name
+                    .toLowerCase()
+                    .includes(searchText.toLowerCase())
+                );
+                setFilteredRestaruant(searchedRestaruant);
+              }}
+            >
+              Search
+            </button>
+          </div>
           <button
             type="button"
+            className="filter-btn"
             onClick={() => {
-              let searchedRestaruant = listOfRestaruant.filter((resData) =>
-                resData.info.name
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase())
+              let filteredRestaruant = listOfRestaruant.filter(
+                (res) => res.info.avgRating >= 4.4
+
               );
-              setFilteredRestaruant(searchedRestaruant);
+              setFilteredRestaruant(filteredRestaruant);
             }}
           >
-            Search
+            Top Rated Restaurant
           </button>
         </div>
-        <button
-          type="button"
-          className="filter-btn"
-          onClick={() => {
-            let filteredRestaruant = listOfRestaruant.filter(
-              (res) => res.info.avgRating >= 4.4
-
-            );
-            setFilteredRestaruant(filteredRestaruant);
-          }}
-        >
-          Top Rated Restaurant
-        </button>
+        <div className="res-container">
+          {filteredRestaruant.map((restaurant) => (
+            <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
+              <RestaruantCard resData={restaurant} />
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className="res-container">
-        {filteredRestaruant.map((restaurant) => (
-          <RestaruantCard key={restaurant.info.id} resData={restaurant} />
-        ))}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Body;
