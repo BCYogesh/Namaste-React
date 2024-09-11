@@ -26,7 +26,6 @@ const RestaruantMenu = () => {
     // menu items
     const { itemCards } =
         resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[3]?.card?.card;
-    console.log(itemCards);
 
     if (!itemCards) return <Shimmer />;
 
