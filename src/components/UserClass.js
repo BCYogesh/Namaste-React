@@ -1,38 +1,47 @@
 import React from "react";
 
-
 class UserClass extends React.Component {
 
     constructor(props) {
         super(props);
 
-        // state variable
         this.state = {
-            count: 0,
-        }
-        console.log(this.props.name + "child constructor")
+            userInfo: {
+                name: 'local',
+                location: 'Chennai'
+            }
+        };
     }
 
-    componentDidMount() {
-        console.log(this.props.name + "child component did mount")
+    async componentDidMount() {
+        const data = await fetch("https://api.github.com/users/BCYogesh");
+        const json = await data.json();
+
+        this.setState({
+            userInfo: json,
+        });
+
+        console.log(json);
+
     }
+
+
+    componentWillUnmount() {
+        console.log('Component will unmount');
+
+    }
+
 
     render() {
-        const { name, location } = this.props;
-        const { count } = this.state;
-        console.log(this.props.name + "child render")
+
+        const { name, location, avatar_url } = this.state.userInfo;
+
         return (
             <div className="user-card">
                 <h2>Name : {name}</h2>
+                <img src={avatar_url}></img>
                 <h3>Location : {location}</h3>
                 <p>Contact : bcyogesh@gmail.com</p>
-                <h1>Count : {count}</h1>
-                <button type="button" onClick={() => {
-                    // never update state variable directly in class component
-                    this.setState({
-                        count: count + 1
-                    })
-                }}>Increment</button>
             </div>
         );
     }
@@ -40,4 +49,7 @@ class UserClass extends React.Component {
 
 
 export default UserClass;
+
+
+
 

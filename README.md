@@ -1,21 +1,22 @@
-/**
- * Header
- *  - Logo
- *  - Nav Items
- * Body
- *  - Search
- *  - RestaruantContainer
- *      - Restaruant Card
- *          - img
- *          - Name of Res,Star Rating, Cusisine,  Delivery time
- * Footer
- *  - Copyright
- *  - Links
- *  - Address
- *  - Contact
- */
+/\*\*
 
-/*
+- Header
+- - Logo
+- - Nav Items
+- Body
+- - Search
+- - RestaruantContainer
+-      - Restaruant Card
+-          - img
+-          - Name of Res,Star Rating, Cusisine,  Delivery time
+- Footer
+- - Copyright
+- - Links
+- - Address
+- - Contact
+    \*/
+
+/\*
 
     1. page load -> API call -> Render on UI
     2. page load -> Render on skeleton -> API Call -> Render
@@ -24,8 +25,16 @@
 
 - useEffect
 
-    >> When the body component has rendereding finished after call the callback function useEffect.
+  > > When the body component has rendereding finished after call the callback function useEffect.
 
+- Sass writing css adding some super powers
+- Scss writing css adding some super powers
+- Tailwind css
+- Material UI
+- Styled component
+- Chakra UI
+- ant design
 
+Recommended way to add css in styled component
 
-*/
+\*/
