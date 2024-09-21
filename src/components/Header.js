@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
+
   const [isLogged, setIsLogged] = useState("Log in");
+
+  // Reading the context data
+  const { loggedInUser } = useContext(UserContext);
 
   const onlineStatus = useOnlineStatus();
 
@@ -34,6 +39,7 @@ const Header = () => {
           <button className="px-4" onClick={() => isLogged === "Log in" ? setIsLogged("Log out") : setIsLogged("Log in")}>
             {isLogged}
           </button>
+          <li>{loggedInUser}</li>
         </ul>
       </div>
     </div>

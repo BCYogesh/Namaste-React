@@ -1,14 +1,16 @@
-import RestaruantCard from "./RestaruantCard";
-import { useState, useEffect } from "react";
+import RestaruantCard, { addDiscount } from "./RestaruantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
-
   const [listOfRestaruant, setListOfRestaruant] = useState([]);
   const [filteredRestaruant, setFilteredRestaruant] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const HaveDiscountText = addDiscount(RestaruantCard);
 
   useEffect(() => {
     fetchData();
@@ -31,60 +33,78 @@ const Body = () => {
 
   const status = useOnlineStatus();
 
-  if (status === false) return (<h1>Offline check your internect connection</h1>);
+  const { setUserName, loggedInUser } = useContext(UserContext);
 
-  return listOfRestaruant.length === 0 ? <Shimmer />
-    : (
+  if (status === false) return <h1>Offline check your internect connection</h1>;
 
-      <div className="body px-8">
-        <div className="flex my-6">
-          <div className="search">
-            <input
-              className="p-2 px-6 border border-solid border-black rounded-2xl"
-              type="text"
-              placeholder="Search Restarurant"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <button
-              className="p-2 px-6 mx-1 border border-solid bg-blue-400 rounded-lg text-stone-100 font-bold"
-              type="button"
-              onClick={() => {
-                let searchedRestaruant = listOfRestaruant.filter((resData) =>
-                  resData.info.name
-                    .toLowerCase()
-                    .includes(searchText.toLowerCase())
-                );
-                setFilteredRestaruant(searchedRestaruant);
-              }}
-            >
-              Search
-            </button>
-          </div>
-          <div className="topRestaurant ml-20">
-            <button className="p-2 px-6 border border-solid bg-red-400 rounded-lg text-stone-100 font-bold"
-              type="button"
-              onClick={() => {
-                let filteredRestaruant = listOfRestaruant.filter(
-                  (res) => res.info.avgRating >= 4.4
-
-                );
-                setFilteredRestaruant(filteredRestaruant);
-              }}
-            >
-              Top Rated Restaurant
-            </button>
-          </div>
+  return listOfRestaruant.length === 0 ? (
+    <Shimmer />
+  ) : (
+    <div className="body px-8">
+      <div className="flex my-6">
+        <div className="search">
+          <input
+            className="p-2 px-6 border border-solid border-black rounded-2xl"
+            type="text"
+            placeholder="Search Restarurant"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <button
+            className="p-2 px-6 mx-1 border border-solid bg-blue-400 rounded-lg text-stone-100 font-bold"
+            type="button"
+            onClick={() => {
+              let searchedRestaruant = listOfRestaruant.filter((resData) =>
+                resData.info.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              );
+              setFilteredRestaruant(searchedRestaruant);
+            }}
+          >
+            Search
+          </button>
         </div>
-        <div className="flex flex-wrap justify-between">
-          {filteredRestaruant.map((restaurant) => (
-            <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
-              <RestaruantCard resData={restaurant} />
-            </Link>
-          ))}
+        <div className="topRestaurant ml-20">
+          <button
+            className="p-2 px-6 border border-solid bg-red-400 rounded-lg text-stone-100 font-bold"
+            type="button"
+            onClick={() => {
+              let filteredRestaruant = listOfRestaruant.filter(
+                (res) => res.info.avgRating >= 4.4
+              );
+              setFilteredRestaruant(filteredRestaruant);
+            }}
+          >
+            Top Rated Restaurant
+          </button>
+        </div>
+        <div className="topRestaurant ml-20">
+          <label>UserName : </label>
+          <input
+            type="text"
+            className="p-2 border border-black"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          ></input>
         </div>
       </div>
-    );
+      <div className="flex flex-wrap justify-between">
+        {filteredRestaruant.map((restaurant) => (
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            {!restaurant.info.aggregatedDiscountInfoV3 ? (
+              <HaveDiscountText resData={restaurant} />
+            ) : (
+              <RestaruantCard resData={restaurant} />
+            )}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Body;
