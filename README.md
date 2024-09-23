@@ -37,4 +37,15 @@
 
 Recommended way to add css in styled component
 
+# Redux Toolkit
+
+- Install @reduxjs/toolkit and react-redux
+- Build our store
+- Connect our store to our app
+- Slice (Cart slice)
+- dispatch (action)
+- Selector
+
+/\*
+
 \*/

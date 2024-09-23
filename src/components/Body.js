@@ -30,7 +30,7 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
-
+  0
   const status = useOnlineStatus();
 
   const { setUserName, loggedInUser } = useContext(UserContext);
