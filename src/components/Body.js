@@ -23,7 +23,7 @@ const Body = () => {
 
     const json = await data.json();
 
-    console.log(json);
+    //console.log(json);
 
     setListOfRestaruant(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -31,8 +31,9 @@ const Body = () => {
     setFilteredRestaruant(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    //console.log(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
   };
-  0
+
   const status = useOnlineStatus();
 
   const { setUserName, loggedInUser } = useContext(UserContext);
@@ -48,6 +49,7 @@ const Body = () => {
           <input
             className="p-2 px-6 border border-solid border-black rounded-2xl"
             type="text"
+            data-testid="searchInput"
             placeholder="Search Restarurant"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -91,7 +93,7 @@ const Body = () => {
           ></input>
         </div>
       </div>
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap px-15 gap-11">
         {filteredRestaruant.map((restaurant) => (
           <Link
             key={restaurant.info.id}

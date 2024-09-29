@@ -10,7 +10,9 @@ const RestaruantCard = (props) => {
   const data = useContext(UserContext);
 
   return (
-    <div className="border border-gray-95 bg-gray-50 w-72 my-4 hover:shadow-lg hover:bg-gray-100 rounded-lg">
+    <div
+      data-testid="resList"
+      className="border border-gray-95 bg-gray-50 w-72 my-4 hover:shadow-lg hover:bg-gray-100 rounded-lg">
       <img
         src={CDN_URL + cloudinaryImageId}
         alt="res-logo"
